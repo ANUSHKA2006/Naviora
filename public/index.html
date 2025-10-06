@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Naviora Techfest Login/Signup</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+<!-- Google Sign-In -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+<video autoplay muted loop playsinline class="video-bg">
+  <source src="5057526-uhd_3840_2160_25fps.mp4" type="video/mp4">
+</video>
+
+<div class="form-side">
+  <div class="form-box" id="form-box">
+
+    <!-- Login Form -->
+    <div id="login-form">
+      <h1 class="logo">Naviora</h1>
+      <p class="subtitle">Log in to continue</p>
+      <form id="loginForm">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="login-email" placeholder="Enter your email" required autocomplete="off">
+        </div>
+        <div class="input-group">
+         
+  <label>Password</label>
+  <input type="password" id="login-password" placeholder="Enter your password" required autocomplete="off">
+  <a href="#" id="forgot-password" class="forgot">Forgot Password?</a>
+</div>
+
+        <button type="submit" class="btn">Log In</button>
+      </form>
+
+      <div class="divider"><span>OR</span></div>
+
+      <!-- Google Sign-In Button -->
+  <div id="g_id_onload"
+     data-client_id="614926776175-014lh4vat8nif3dkdcbjb69b5s1rdv8h.apps.googleusercontent.com"
+     data-context="signin"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="false">
+</div>
+
+<div class="g_id_signin"
+     data-type="standard"
+     data-size="large"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-shape="rectangular"
+     data-logo_alignment="left">
+</div>
+
+
+      <p class="signup-text">
+        Don’t have an account? <a href="#" id="show-signup">Sign up now</a>
+      </p>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" style="display:none;">
+      <h1 class="logo">Sign Up</h1>
+
+      <!-- Step 1: Email -->
+      <div id="step1">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="signup-email" placeholder="Enter your email" required autocomplete="off">
+        </div>
+        <button class="btn" type="button" id="send-code-btn">Send Code</button>
+      </div>
+
+      <!-- Step 2: Verification Code -->
+      <div id="step2" style="display:none;">
+        <div class="input-group">
+          <label>Verification Code</label>
+          <input type="text" id="signup-code" placeholder="Enter code" required>
+        </div>
+        <button class="btn" type="button" id="verify-code-btn">Next</button>
+      </div>
+
+      <!-- Step 3: Name & Password -->
+      <div id="step3" style="display:none;">
+        <div class="input-group">
+          <label>Full Name</label>
+          <input type="text" id="signup-name" placeholder="Enter your name" required>
+        </div>
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" id="signup-password" placeholder="Enter password" required>
+        </div>
+        <div class="input-group">
+          <label>Confirm Password</label>
+          <input type="password" id="signup-confirm" placeholder="Confirm password" required>
+        </div>
+        <button class="btn" id="final-signup-btn">Sign Up</button>
+      </div>
+
+      <p class="signup-text">
+        Already have an account? <a href="#" id="back-to-login">Log in</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
