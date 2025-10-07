@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Feedback Form</title>
+  <link rel="stylesheet" href="admin-login.css">
+</head>
+<body>
+
+  <video autoplay muted loop id="bgVideo">
+    <source src="5057526-uhd_3840_2160_25fps.mp4" type="video/mp4">
+  </video>
+
+  <div class="feedback-container">
+    <h1>We Value Your Feedback 💬</h1>
+
+    <form id="feedbackForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <textarea id="feedback" placeholder="Write your feedback..." required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="responseMsg"></p>
+  </div>
+
+  <script>
+    document.getElementById("feedbackForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const feedback = document.getElementById("feedback").value;
+
+      try {
+        const res = await fetch("/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, feedback })
+        });
+
+        const data = await res.json();
+        document.getElementById("responseMsg").textContent = data.message;
+        document.getElementById("feedbackForm").reset();
+      } catch (err) {
+        document.getElementById("responseMsg").textContent = "⚠️ Error submitting feedback!";
+      }
+    });
+  </script>
+
+</body>
+</html>

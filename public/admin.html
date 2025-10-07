@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Admin Panel</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <div class="admin-container">
+    <h1>Feedback Admin Panel</h1>
+    <input type="text" id="search" placeholder="Search feedback...">
+
+    <table id="feedbackTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Feedback</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function fetchFeedbacks() {
+      const res = await fetch("/api/feedbacks");
+      const feedbacks = await res.json();
+      const tbody = document.querySelector("#feedbackTable tbody");
+      tbody.innerHTML = "";
+
+      feedbacks.forEach((f, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${i + 1}</td>
+          <td>${f.name || "No name"}</td>
+          <td>${f.email || "No email"}</td>
+          <td>${f.feedback || "No feedback"}</td>
+          <td>${new Date(f.date).toLocaleString()}</td>
+          <td><button onclick="deleteFeedback('${f._id}')">Delete</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function deleteFeedback(id) {
+      if (confirm("Are you sure you want to delete this feedback?")) {
+        await fetch(`/api/feedbacks/${id}`, { method: "DELETE" });
+        fetchFeedbacks();
+      }
+    }
+
+    // Search feature
+    document.getElementById("search").addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll("#feedbackTable tbody tr").forEach(tr => {
+        const text = tr.innerText.toLowerCase();
+        tr.style.display = text.includes(query) ? "" : "none";
+      });
+    });
+
+    fetchFeedbacks();
+  </script>
+</body>
+</html>

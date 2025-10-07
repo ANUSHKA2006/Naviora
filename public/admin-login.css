@@ -1,0 +1,98 @@
+/* Make sure page fills screen */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* Background video */
+#bgVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;        /* maintains aspect ratio, fills area */
+  object-position: center;  /* centers the video */
+  z-index: -1;
+  filter: brightness(0.55);
+}
+
+/* Center feedback form */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Feedback form container */
+.feedback-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 0 25px rgba(255, 211, 106, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: fadeIn 1.2s ease-in-out;
+}
+
+/* Title */
+.feedback-container h2 {
+  margin-bottom: 20px;
+  color: #ffd36a;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Input fields */
+.feedback-container input,
+.feedback-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 15px;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.feedback-container input:focus,
+.feedback-container textarea:focus {
+  border-color: #ffd36a;
+  box-shadow: 0 0 10px rgba(255, 211, 106, 0.5);
+}
+
+/* Button */
+.feedback-container button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ffd36a, #ffb84d);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.feedback-container button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffcf40, #ffa726);
+  box-shadow: 0 0 15px rgba(255, 211, 106, 0.6);
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
