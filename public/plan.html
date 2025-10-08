@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plan Your Trip</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="plan.css" />
+</head>
+
+<body>
+    <video autoplay muted loop id="bg-video">
+    <source src="103819-664507357_small(1).mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+
+    <div class="sidebar">
+        <div class="logo"><img src="logo2.png" alt="Logo" /></div>
+        <a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a>
+        <a href="agents.html"><i class="fas fa-university"></i><span>EXPLORE</span></a>
+    </div>
+
+    <div class="topbar">
+        <a href="agents.html">Meet My Agents</a>
+        <a href="plan.html" class="active">Plan My Trip</a>
+        <a href="accommodation.html">Accommodation</a>
+    </div>
+
+    <div class="main">
+        <h1>Your Personalized Trip Planner 🚀</h1>
+        <p>Tell us a bit about your travel vision and let our AI agents craft your journey.</p>
+
+        <div class="plan-form-card">
+            <form id="planning-form">
+                <h2>1. Destination & Dates</h2>
+                <label for="destination">Where do you want to go?</label>
+                <input type="text" id="destination" name="destination" placeholder="e.g., Kyoto, Japan" required>
+
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name="startDate" required>
+
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" required>
+                
+                <h2>2. Agent Focus (Select Preferences)</h2>
+                <p style="font-size: 0.9rem; color: #ddd;">Which features should our AI prioritize?</p>
+                
+                <div class="agent-choices" id="agent-choices">
+                    <div>
+                        <input type="checkbox" id="skyGazer" name="preferences" value="Sky Gazer">
+                        <label for="skyGazer">Sky Gazer (Vistas, Scenic Views)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="trailblazer" name="preferences" value="Trailblazer">
+                        <label for="trailblazer">Trailblazer (Adventure, Trekking)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="quartermaster" name="preferences" value="Quartermaster">
+                        <label for="quartermaster">Quartermaster (Culture, Food, Heritage)</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="orchestrator" name="preferences" value="Orchestrator">
+                        <label for="orchestrator">Orchestrator (Festivals, Events)</label>
+                    </div>
+                </div>
+
+                <label for="festivalQuery">Any specific event or festival you want to check?</label>
+                <input type="text" id="festivalQuery" name="festivalQuery" placeholder="e.g., Cherry Blossom viewing, Oktoberfest, a specific concert">
+
+                <button type="submit" class="btn-submit">Generate My Itinerary</button>
+            </form>
+        </div>
+
+        <div class="final-itinerary-card" id="final-itinerary-output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
