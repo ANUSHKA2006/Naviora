@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meet My Agents</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+ <link rel="stylesheet" href="agents.css" /> 
+</head>
+
+<body>
+ <video autoplay muted loop id="bg-video">
+<source src="103819-664507357_small(1).mp4" type="video/mp4">
+Your browser does not support HTML5 video.
+ </video>
+
+<div class="sidebar">
+ <div class="logo">
+<img src="logo2.png" alt="Logo" />
+ </div> 
+<a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a>
+ <a href="#explore"><i class="fas fa-university"></i><span>EXPLORE</span></a>
+ <a href="#contact"><i class="fas fa-phone"></i><span>CONTACT</span></a>
+ <a href="#about"><i class="fas fa-users"></i><span>ABOUT US</span></a>
+<a href="#sponsors"><i class="fas fa-gem"></i><span>SPONSORS</span></a>
+ </div>
+ <div class="topbar">
+<a href="agents.html" class="active">Meet My Agents</a>
+<a href="plan.html">Plan My Trip</a> 
+<a href="accommodation.html">Accommodation</a>
+ </div>
+
+<div class="main">
+<h1>Meet My Agents 🌍</h1>
+<p>Our specialized agents work together to craft your perfect journey. See their features below and start your plan!</p>
+
+<div class="agents-container">
+<div class="agent-card" id="skygazer">
+ <img src="sky.jpg" alt="Sky Gazer">
+ <h2>Sky Gazer</h2>
+ <p>Find serenity and sunsets in the most beautiful corners of the world.</p>
+</div>
+
+<div class="agent-card" id="trailblazer">
+<img src="trail.jpg" alt="Trailblazer">
+ <h2>Trailblazer</h2>
+ <p>Explore adventure trails, mountain peaks, and thrill-filled journeys.</p>
+</div>
+
+ <div class="agent-card" id="quartermaster">
+   <img src="food.jpg" alt="Quartermaster">
+<h2>Quartermaster</h2>
+ <p>Dive into culture, heritage, and the flavors that define every city.</p>
+</div>
+
+<div class="agent-card" id="orchestrator">
+<img src="event.jpg" alt="Orchestrator">
+<h2>Orchestrator</h2>
+ <p>Catch live festivals, concerts, and events happening around you.</p>
+</div>
+</div>
+
+ <div style="margin-top: 50px;">
+<button id="start-planning-btn" class="plan-button">Start Your Custom Plan</button>
+ </div>
+
+<div class="itinerary-container" id="itinerary" style="display: none;"></div>
+ </div>
+
+<script>
+ // Handles the redirect when the button is clicked
+ document.getElementById('start-planning-btn').addEventListener('click', () => {
+ window.location.href = 'plan.html'; 
+ });
+ </script>
+</body>
+</html>

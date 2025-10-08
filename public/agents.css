@@ -1,0 +1,185 @@
+/* --- Global Reset & Background --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* 🔹 Background Video */
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -2; /* KEEP LOW */
+    object-fit: cover;
+}
+
+/* 🔹 Dark overlay to improve readability */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1; /* KEEP LOW */
+}
+
+/* 🔹 Sidebar (HIGH Z-INDEX) */
+.sidebar {
+    position: fixed; /* CRITICAL for Z-index */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    z-index: 10; /* HIGH Z-INDEX */
+}
+
+.sidebar .logo img {
+    width: 60px;
+    margin-bottom: 20px;
+    border-radius: 50%;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    margin: 15px 0;
+    transition: 0.3s;
+}
+
+.sidebar a i {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* 🔹 Topbar (HIGH Z-INDEX) */
+.topbar {
+    position: fixed; /* CRITICAL for Z-index */
+    top: 0;
+    left: 80px;
+    width: calc(100% - 80px);
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    z-index: 10; /* HIGH Z-INDEX */
+}
+
+.topbar a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 20px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.topbar a.active {
+    color: #00bcd4;
+    border-bottom: 2px solid #00bcd4;
+    padding-bottom: 2px;
+}
+
+/* 🔹 Main Content (Positive Z-INDEX) */
+.main {
+    margin-left: 100px;
+    margin-top: 80px;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    z-index: 5; /* POSITIVE Z-INDEX */
+    position: relative;
+}
+
+.main h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.main p {
+    font-size: 1rem;
+    color: #ddd;
+    margin-bottom: 30px;
+}
+
+/* 🔹 Agents Container */
+.agents-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.agent-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+}
+
+.agent-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.agent-card img {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.agent-card h2 {
+    margin: 15px 0 10px;
+    font-size: 1.3rem;
+    color: #00eaff;
+}
+
+.agent-card p {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-bottom: 15px;
+}
+
+/* 🔹 Start Planning Button */
+.plan-button {
+    background: #00bcd4;
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.plan-button:hover {
+    background: #0097a7;
+    box-shadow: 0 0 15px #00bcd4;
+}
+
+/* 🔹 Itinerary Display (Hidden placeholder) */
+.itinerary-container {
+    margin-top: 40px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 15px;
+    display: none; /* hidden initially */
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
