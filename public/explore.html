@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Naviora — Explore</title>
+  <link rel="stylesheet" href="explore.css" /> 
+</head>
+<body>
+  
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="103819-664507357_small(1).mp4" type="video/mp4">
+  </video>
+
+  <main class="explore-root">
+    <header class="topbar">
+      <h1>Naviora — Explore</h1>
+      <div class="mood-row" id="moodRow">
+        </div>
+    </header>
+
+    <section class="controls">
+      <div class="left">
+        <input id="searchInput" placeholder="Search a place or mood (e.g. beach, mountains, Jaipur)" />
+        <button id="aiSuggest">AI Suggest</button>
+      </div>
+      <div class="right">
+        <button id="spinBtn">Spin the Globe 🌏</button>
+      </div>
+    </section>
+
+    <section class="results">
+      <div class="compare-panel" id="comparePanel">
+        <h2>Compare Destinations</h2>
+        <div class="compare-list" id="compareList">
+          <p class="initial-message">Enter a city or choose a mood to discover exciting places!</p>
+        </div>
+      </div>
+
+      <div class="events-panel" id="eventsPanel">
+        <h2>Upcoming Events & Festivals</h2>
+        <div id="eventsList">
+          <p class="initial-message">Events will appear here after you search.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="chat-panel">
+      <h3>AI Travel Assistant</h3>
+      <div id="chatLog" class="chat-log"></div>
+      <div class="chat-input">
+        <input id="chatInput" placeholder="Ask: 'Relaxing weekend near Goa'" />
+        <button id="chatSend">Send</button>
+      </div>
+    </aside>
+
+    <div id="globeModal" class="modal hidden">
+      <div class="modal-inner">
+        <canvas id="globeCanvas" width="420" height="420"></canvas>
+        <button id="closeGlobe">Close</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="explore.js"></script>
+</body>
+</html>

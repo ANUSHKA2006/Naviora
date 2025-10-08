@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
@@ -30,6 +31,5 @@
   "bugs": {
     "url": "https://github.com/ANUSHKA2006/Naviora/issues"
   },
-  "homepage": "https://github.com/ANUSHKA2006/Naviora#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/ANUSHKA2006/Naviora#readme"
 }
