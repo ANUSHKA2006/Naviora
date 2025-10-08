@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Creators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    body {
+      background: url("oo.jpg") no-repeat center center/cover;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 100px; /* space for sidebar */
+    }
+
+    /* Sidebar (glass effect) */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 90px;
+      height: 100%;
+      
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px 0;
+      gap: 35px;
+      
+    }
+
+    .sidebar .logo img {
+      width: 160px;
+      margin-top: 0px;
+      filter: brightness(0) invert(1); /* makes logo white if dark */
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a i {
+      font-size: 26px;
+    }
+
+    .sidebar a:hover {
+      color: #00f0ff;
+      transform: scale(1.1);
+    }
+
+    /* Main container */
+    .team-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 80px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .creator-card {
+      background: rgba(0,0,0,0.6);
+      border: 2px solid #00f0ff;
+      border-radius: 12px;
+      width: 320px;
+      height: 380px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+      position: relative;
+      padding: 20px 15px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .creator-info h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #00f0ff;
+      text-shadow: 0 0 10px #00f0ff, 0 0 20px #ff00ff;
+      margin-bottom: 5px;
+    }
+
+    .creator-info h4 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+
+    .creator-photo {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      position: absolute;
+      bottom: 60px;
+      transition: transform 0.3s ease;
+    }
+
+    .creator-photo:hover {
+      transform: scale(1.4);
+    }
+
+    .contact-box {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      border: 2px solid #00f0ff;
+      padding: 8px 15px;
+      border-radius: 8px;
+      width: 85%;
+      font-size: 0.9rem;
+    }
+
+    .contact-box a {
+      color: #00f0ff;
+      text-decoration: none;
+    }
+
+    .contact-box a:hover {
+      color: #ff00ff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="logo2.png" alt="Logo">
+    </div>
+
+    <a href="#home"><i class="fas fa-home"></i><span>HOME</span></a>
+    <a href="#explore"><i class="fas fa-university"></i><span>EXPLORE</span></a>
+    <a href="#contact"><i class="fas fa-phone"></i><span>CONTACT</span></a>
+    <a href="#about"><i class="fas fa-users"></i><span>ABOUT US</span></a>
+    <a href="#sponsors"><i class="fas fa-gem"></i><span>SPONSORS</span></a>
+  </div>
+
+  <!-- Cards -->
+  <div class="team-container">
+    <div class="creator-card">
+      <div class="creator-info">
+        <h3>Anushka</h3>
+        <h4>SITE CREATORS</h4>
+      </div>
+      <img src="me22edit.png" alt="Anushka" class="creator-photo">
+      <div class="contact-box">
+        <p>Email: <a href="mailto:anushka@example.com">anushka@example.com</a></p>
+        <p>Phone: <a href="tel:+911234567890">+91 12345 67890</a></p>
+      </div>
+    </div>
+
+    <div class="creator-card">
+      <div class="creator-info">
+        <h3>Anushka Wanve</h3>
+        <h4>SITE CREATORS</h4>
+      </div>
+      <img src="22Rr.png" alt="Rohit" class="creator-photo">
+      <div class="contact-box">
+        <p>Email: <a href="mailto:anushkawanve@example.com">anushkawanve@example.com</a></p>
+        <p>Phone: <a href="tel:+919876543210">+91 98765 43210</a></p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

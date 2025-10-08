@@ -6,7 +6,10 @@
   font-family:'Audiowide', sans-serif;
   scroll-behavior: smooth;
 }
-
+.logo{
+  height: 40px;
+  margin-bottom: 49px;
+}
 /* ===== BACKGROUND VIDEO ===== */
 #bg-video {
   position: fixed;
