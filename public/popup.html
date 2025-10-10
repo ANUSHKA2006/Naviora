@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naviora Travel Loading</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    /* Background - dark cozy beach colors */
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #0b1e2d, #1f3a4c, #325b7d);
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* Popup container */
+    .popup {
+      background: rgba(0,0,0,0.7);
+      border-radius: 20px;
+      padding: 40px 60px;
+      text-align: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    /* Animated spinner lines */
+    .spinner {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+    }
+
+    .line {
+      width: 4px;
+      height: 20px;
+      background: #ffd700;
+      margin: 0 3px;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+
+    .line:nth-child(1) { animation-delay: 0s; }
+    .line:nth-child(2) { animation-delay: 0.2s; }
+    .line:nth-child(3) { animation-delay: 0.4s; }
+    .line:nth-child(4) { animation-delay: 0.6s; }
+    .line:nth-child(5) { animation-delay: 0.8s; }
+
+    @keyframes bounce {
+      0%, 40%, 100% { transform: scaleY(0.4); }
+      20% { transform: scaleY(1); }
+    }
+
+    /* Travel-themed Naviora lines */
+    .lines {
+      font-family: 'Pacifico', cursive;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #ffe680;
+      animation: textFade 3s infinite alternate;
+    }
+
+    @keyframes textFade {
+      0% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="popup">
+    <h1>Welcome to Naviora Travel</h1>
+    <div class="spinner">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div class="lines">
+      <p>Discover beaches, mountains & hidden gems</p>
+      <p>Adventure. Relaxation. Memories.</p>
+      <p>Your journey starts here with Naviora Travel</p>
+    </div>
+  </div>
+
+  <script>
+    // Redirect to front.html after 5 seconds
+    setTimeout(() => {
+      window.location.href = "front.html";
+    }, 5000);
+  </script>
+</body>
+</html>
