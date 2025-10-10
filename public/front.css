@@ -262,6 +262,11 @@
 .features {
   background-attachment: fixed;
   background: transparent;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 54cd1ff (links)
 }
 .topbar {
   display: flex;
@@ -354,4 +359,8 @@
 /* Animation: pop effect */
 #user-avatar.pop {
   transform: scale(1);
+<<<<<<< HEAD
+=======
+>>>>>>> 7739b0e (links)
+>>>>>>> 54cd1ff (links)
 }
