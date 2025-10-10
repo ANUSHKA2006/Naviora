@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accommodation Booking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="travel.css" /> </head>
+
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="103819-664507357_small(1).mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="sidebar">
+        <div class="logo"><img src="logo2.png" alt="Logo" /></div>
+        <a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a>
+        <a href="agents.html"><i class="fas fa-university"></i><span>EXPLORE</span></a>
+    </div>
+
+    <div class="topbar">
+        <a href="agents.html">Meet My Agents</a>
+        <a href="plan.html">Plan My Trip</a>
+        <a href="accommodation.html" class="active">Accommodation</a>
+    </div>
+
+    <div class="main">
+        <h1>Find Your Perfect Stay 🏨</h1>
+        <p>Our AI analyzes location, price, and amenities to find the best hotels for you.</p>
+
+        <div class="plan-form-card">
+            <form id="booking-form">
+                <h2>1. Destination & Dates</h2>
+                <label for="hotelDestination">Where are you staying?</label>
+                <input type="text" id="hotelDestination" name="hotelDestination" placeholder="e.g., Paris, France" required>
+
+                <div class="date-inputs">
+                    <div>
+                        <label for="checkInDate">Check-In Date</label>
+                        <input type="date" id="checkInDate" name="checkInDate" required>
+                    </div>
+                    <div>
+                        <label for="checkOutDate">Check-Out Date</label>
+                        <input type="date" id="checkOutDate" name="checkOutDate" required>
+                    </div>
+                </div>
+
+                <h2>2. Preferences & Filters</h2>
+                
+                <label for="guests">Number of Guests</label>
+                <input type="number" id="guests" name="guests" min="1" value="2" required>
+                
+                <label for="budget">Maximum Price (per night, USD)</label>
+                <input type="number" id="budget" name="budget" min="50" max="1000" value="200" required>
+
+                <label for="roomType" style="margin-top: 15px;">Room Type Preference</label>
+                <div class="agent-choices" style="margin-bottom: 0;">
+                    <div>
+                        <input type="radio" id="single" name="roomType" value="Single" checked>
+                        <label for="single">Single</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="double" name="roomType" value="Double">
+                        <label for="double">Double</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="suite" name="roomType" value="Suite">
+                        <label for="suite">Suite</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit">Search Hotels</button>
+            </form>
+        </div>
+
+        <div class="final-itinerary-card" id="hotel-results-output" style="display: none;">
+            </div>
+    </div>
+
+
+
+</body>
+</html>
