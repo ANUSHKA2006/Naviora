@@ -9,8 +9,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
     "node-fetch": "^3.3.2",
-    "nodemailer": "^7.0.7",
-    "openai": "^6.1.0"
+    "nodemailer": "^7.0.9",
+    "openai": "^6.3.0"
   },
   "name": "naviora",
   "version": "1.0.0",
