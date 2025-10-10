@@ -1,35 +1,66 @@
+// server.js (CommonJS - merged)
+
+// Load env first
 require("dotenv").config();
+
+// Core & 3rd-party
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
+const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const { OAuth2Client } = require("google-auth-library");
-const path = require("path");
-const crypto = require("crypto");
 
-// ===== Node fetch for CommonJS =====
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+// Node fetch for CommonJS dynamic import
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
+// OpenAI client (CommonJS)
 const OpenAI = require("openai");
 
-// ==================== Config ====================
+// Models (assumes your model files export via module.exports)
+const Itinerary = require("./models/Itinerary.js");
+const Agent = require("./models/Agent.js");
+
+// If your User/Feedback models are in separate files, you can require them instead of declaring below.
+// But to preserve original code from server2, models are created inline below.
+
+// App setup
 const app = express();
-app.use(cors());
+
+// CORS: allow live-server plus general local dev. Adjust as needed.
+app.use(cors({ origin: ["http://127.0.0.1:5500", "http://localhost:3000", "http://localhost:5500"] }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Config
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || "changeme";
 
-// ==================== MongoDB ====================
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.log(err));
+// ---------------------- MONGODB ----------------------
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB connected"))
+  .catch(err => console.error("❌ Mongo error:", err.message));
+mongoose.connection.once("open", () => {
+  console.log("✅ MongoDB connection is open");
+});
 
-// ==================== Models ====================
-const userSchema = new mongoose.Schema({
+mongoose.connection.on("error", (err) => {
+  console.error("❌ MongoDB connection error:", err);
+});
+
+  
+
+// ---------------------- MODELS (server2's inline models) ----------------------
+// If you already have User/Feedback models in separate files, remove these and require those files instead.
+const { Schema } = mongoose;
+
+const userSchema = new Schema({
   email: { type: String, unique: true },
   password: String,
   name: String,
@@ -41,7 +72,7 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model("User", userSchema);
 
-const feedbackSchema = new mongoose.Schema({
+const feedbackSchema = new Schema({
   name: String,
   email: String,
   feedback: String,
@@ -49,7 +80,7 @@ const feedbackSchema = new mongoose.Schema({
 });
 const Feedback = mongoose.model("Feedback", feedbackSchema);
 
-// ==================== Nodemailer ====================
+// ---------------------- TRANSPORTERS / CLIENTS ----------------------
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -58,13 +89,182 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// ==================== Google OAuth ====================
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// ==================== OpenAI ====================
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// ==================== USER AUTH ROUTES ====================
+// ---------------------- ROUTES FROM SERVER 1: Itinerary, Agents, etc. ----------------------
+
+// MAIN Itinerary API — combines Weather, Events, Attractions
+ app.post("/api/itinerary", async (req, res) => {
+  const { destination, startDate, endDate } = req.body;
+
+  if (!destination || !startDate || !endDate) {
+    return res.status(400).json({ success: false, error: "Destination, startDate, and endDate are required" });
+  }
+
+  console.log(`📅 Creating itinerary for ${destination} from ${startDate} to ${endDate}`);
+
+  try {
+    // --- 1️⃣ WEATHER ---
+    let weather = [];
+    try {
+      const wRes = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(destination)}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
+      );
+      const wData = await wRes.json();
+      console.log("OpenWeather Response:", wData);
+
+      if (wData.list && Array.isArray(wData.list)) {
+        weather = wData.list
+          .filter((_, idx) => idx % 8 === 0)
+          .map(item => ({
+            date: item.dt_txt.split(" ")[0],
+            temp: Number(item.main.temp).toFixed(1),
+            description: item.weather[0].description
+          }));
+      }
+    } catch (err) {
+      console.warn("⚠️ Weather API failed:", err.message);
+    }
+
+    if (!weather.length) weather = [{ date: startDate, temp: "20°C", description: "clear sky" }];
+
+    // --- 2️⃣ EVENTS ---
+    let events = [];
+    try {
+      const startISO = new Date(startDate).toISOString();
+      const endISO = new Date(endDate).toISOString();
+
+      const eRes = await fetch(
+        `https://app.ticketmaster.com/discovery/v2/events.json?city=${encodeURIComponent(destination)}&startDateTime=${startISO}&endDateTime=${endISO}&apikey=${process.env.TICKETMASTER_API_KEY}`
+      );
+      const eData = await eRes.json();
+      console.log("Ticketmaster Response:", eData);
+
+      if (eData._embedded?.events?.length) {
+        events = eData._embedded.events.map(ev => ({
+          name: ev.name,
+          date: ev.dates.start.localDate || startDate,
+          venue: ev._embedded?.venues?.[0]?.name || "Unknown Venue"
+        }));
+      }
+    } catch (err) {
+      console.warn("⚠️ Events API failed:", err.message);
+    }
+
+    if (!events.length) events = [{ name: "Free evening — relax or explore!", date: startDate, venue: "" }];
+
+    // --- 3️⃣ ATTRACTIONS ---
+    let attractions = [];
+    try {
+      const geoRes = await fetch(
+        `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(destination)}&apiKey=${process.env.GEOAPIFY_API_KEY}`
+      );
+      const geoData = await geoRes.json();
+      console.log("GeoData:", geoData);
+
+      if (geoData.features && geoData.features.length > 0) {
+        const { lon, lat } = geoData.features[0].properties;
+        const placesRes = await fetch(
+          `https://api.geoapify.com/v2/places?categories=tourism.sights,tourism.attraction&filter=circle:${lon},${lat},20000&limit=10&apiKey=${process.env.GEOAPIFY_API_KEY}`
+        );
+        const placesData = await placesRes.json();
+        console.log("PlacesData:", placesData);
+
+        if (placesData.features && placesData.features.length > 0) {
+          attractions = placesData.features.map(p => ({
+            name: p.properties.name || "Unnamed Attraction",
+            address: p.properties.address_line2 || p.properties.address_line1 || "Address not available"
+          }));
+        }
+      }
+    } catch (err) {
+      console.warn("Attraction API error:", err.message);
+    }
+
+    if (attractions.length === 0) attractions = [
+      { name: "Visit local markets", address: "" },
+      { name: "Explore city landmarks", address: "" },
+      { name: "Check out a local museum", address: "" }
+    ];
+
+    // --- 4️⃣ DAY-WISE ITINERARY ---
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const numDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+    const dailyPlan = [];
+    for (let i = 0; i < numDays; i++) {
+      const day = new Date(start.getTime() + i * 24 * 60 * 60 * 1000); // add i days safely
+      const dateStr = day.toISOString().split("T")[0];
+
+      const w = weather.find(x => x.date === dateStr) || weather[i % weather.length];
+      const attraction = attractions[i % attractions.length];
+      const todaysEvents = events.filter(e => e.date === dateStr);
+
+      dailyPlan.push({
+        day: i + 1,
+        date: dateStr,
+        weather: w ? `${w.temp}°C, ${w.description}` : "No data",
+        attraction: attraction?.name || "Explore local markets",
+        event: todaysEvents.length ? todaysEvents.map(e => `${e.name} at ${e.venue}`) : ["Free evening — relax or explore!"]
+      });
+    }
+
+    console.log("Generated dailyPlan:", dailyPlan);
+
+    // --- 5️⃣ SAVE ITINERARY ---
+    const itinerary = new Itinerary({
+      location: destination,
+      description: `Day-wise trip from ${startDate} to ${endDate}`,
+      startDate,
+      endDate
+    });
+    await itinerary.save();
+
+    res.json({ success: true, destination, startDate, endDate, days: dailyPlan });
+  } catch (err) {
+    console.error("🔥 Itinerary generation error:", err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
+
+
+    
+
+// Other routes from server1
+app.get("/api/agents", async (req, res) => {
+  const agents = await Agent.find();
+  res.json(agents);
+});
+
+app.get("/api/itinerary", async (req, res) => {
+  const itineraries = await Itinerary.find().populate("agents");
+  res.json(itineraries);
+});
+
+// One-time: populate default agents
+app.get("/api/populateAgents", async (req, res) => {
+  try {
+    await Agent.deleteMany({});
+    await Agent.insertMany([
+      { name: "Sky Gazer", title: "Vistas & Scenic Views", description: "Finds scenic viewpoints", image: "skygazer.png" },
+      { name: "Trailblazer", title: "Adventure & Trekking", description: "Explores trails", image: "trailblazer.png" },
+      { name: "Quartermaster", title: "Culture & Food", description: "Uncovers local heritage", image: "quartermaster.png" },
+      { name: "Orchestrator", title: "Festivals & Events", description: "Finds unique festivals", image: "orchestrator.png" }
+    ]);
+    res.send("✅ Agents populated successfully!");
+  } catch (err) {
+    res.status(500).send("❌ " + err.message);
+  }
+});
+
+// ---------------------- ROUTES FROM SERVER 2: AUTH, FEEDBACK, OPENAI, PHOTOS, EVENTS ----------------------
+
+// Homepage / static served above
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -152,7 +352,7 @@ app.post("/login", async (req, res) => {
 app.post("/google-login", async (req, res) => {
   const { credential } = req.body;
   try {
-    const ticket = await client.verifyIdToken({
+    const ticket = await googleClient.verifyIdToken({
       idToken: credential,
       audience: process.env.GOOGLE_CLIENT_ID
     });
@@ -224,7 +424,7 @@ app.post("/reset-password", async (req, res) => {
   }
 });
 
-// ==================== FEEDBACK ROUTES ====================
+// FEEDBACK routes
 app.post("/feedback", async (req, res) => {
   try {
     const newFeedback = new Feedback(req.body);
@@ -262,8 +462,6 @@ app.delete("/api/feedbacks/:id", async (req, res) => {
     res.status(500).json({ message: "Error deleting feedback" });
   }
 });
-
-// ==================== API ROUTES ====================
 
 // Unsplash Photos
 app.get("/api/photos", async (req, res) => {
@@ -363,6 +561,7 @@ app.get("/api/spots/:city", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch tourist spots" });
   }
 });
+
 // OpenAI Chat
 app.post("/api/chat", async (req, res) => {
   try {
@@ -389,7 +588,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// ==================== START SERVER ====================
+// ---------------------- START SERVER ----------------------
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });

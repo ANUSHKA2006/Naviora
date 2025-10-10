@@ -26,26 +26,24 @@ document.getElementById('planning-form').addEventListener('submit', async functi
             throw new Error(data.error || `Server Error: ${res.status} ${res.statusText}`);
         }
 
+        // Render the itinerary using 'days' array
         output.innerHTML = `
             <h2>✨ Your Custom Itinerary for ${data.destination}</h2>
-            <p>Travel Dates: <strong>${data.dateRange}</strong></p>
+            <p>Travel Dates: <strong>${data.startDate} → ${data.endDate}</strong></p>
 
-            <h3>🌦 5-Day Weather Forecast</h3>
-            <ul>${(data.weather || []).map(w => 
-                `<li>${w.date}: <strong>${w.temp}°C</strong> (${w.description})</li>`).join("")}</ul>
-
-            <h3>🏛 Top Local Attractions (Sights, Museums, Parks)</h3>
-            <ul>${(data.attractions || []).map(a => 
-                `<li><strong>${a.name}</strong> - ${a.address}</li>`).join("")}</ul>
-
-            <h3>🎉 Upcoming Events (Ticketmaster)</h3>
-            ${(data.events || []).length > 0 ? 
-                `<ul>${(data.events || []).map(e => 
-                    `<li><strong>${e.name}</strong> on ${e.date} at ${e.venue}</li>`).join("")}</ul>` :
-                `<p style="color:#ddd;">No major events found for your destination right now.</p>`
-            }
+            <div class="itinerary-list">
+                ${data.days.map(day => `
+                    <div class="day-plan">
+                        <div class="day-number">Day ${day.day} (${day.date})</div>
+                        <div class="destination-card">
+                            <div class="destination-name">Attraction: ${day.attraction}</div>
+                            <p>Weather: ${day.weather}</p>
+                            <p>Events: ${day.event.join(", ")}</p>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
         `;
-
     } catch (err) {
         console.error("Error generating itinerary:", err);
         output.innerHTML = `<p style="color:red; text-align:center; padding: 20px;">
