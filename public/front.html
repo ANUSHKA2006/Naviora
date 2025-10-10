@@ -25,6 +25,11 @@
   <div class="top-item"><a href="agents.html">Meet My Agents</a></div>
   <div class="top-item"><a href="#">Travel</a></div>
   <div class="top-item"><a href="#">Accommodation</a></div>
+
+  <!-- LOGIN / PROFILE BUTTON -->
+  <div class="top-item login-btn-container">
+    <button id="login-btn">Sign In / Login</button>
+  </div>
 </div>
 
   <!-- SIDEBAR -->
@@ -96,5 +101,54 @@
       </div>
     </div>
   </section>
+  <script>
+  const loginBtn = document.getElementById('login-btn');
+
+  loginBtn.addEventListener('click', () => {
+    // Navigate to your login/signup page
+    window.location.href = "index.html";
+  });
+
+  // Check if user is logged in
+  window.addEventListener('DOMContentLoaded', () => {
+    const user = localStorage.getItem('user'); // assuming login sets user
+    if(user) {
+      // Replace login button with profile circle
+      const container = document.querySelector('.login-btn-container');
+      container.innerHTML = `<div class="profile-circle">${user[0].toUpperCase()}</div>`;
+    }
+  });
+  // On page load
+window.addEventListener('DOMContentLoaded', () => {
+  const user = localStorage.getItem('user'); // get stored user/email
+  const container = document.querySelector('.login-btn-container');
+
+  if(user){
+    container.innerHTML = `<div class="profile-circle" id="profile-circle">${user[0].toUpperCase()}</div>`;
+
+    // Optional: show a dropdown menu on click
+    const profileCircle = document.getElementById('profile-circle');
+    profileCircle.addEventListener('click', () => {
+      const menu = document.createElement('div');
+      menu.classList.add('profile-menu');
+      menu.innerHTML = `
+        <a href="#">Profile</a>
+        <a href="#" id="logout">Logout</a>
+      `;
+      container.appendChild(menu);
+
+      // Logout action
+      document.getElementById('logout').addEventListener('click', () => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        window.location.reload(); // refresh to show login button
+      });
+    });
+  }
+});
+
+</script>
+
+
 </body>
 </html>

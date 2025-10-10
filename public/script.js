@@ -98,7 +98,7 @@ document.getElementById("final-signup-btn").addEventListener("click", async (e) 
 // -------------------------
 // LOGIN
 // -------------------------
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
@@ -113,7 +113,9 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     else {
       alert(data.msg);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", email);
       document.querySelectorAll("input").forEach(input => input.value = "");
+      window.location.href = "front.html";
     }
   } catch(err){ console.error(err); alert("Login failed!"); }
 });
@@ -124,11 +126,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 document.getElementById("forgot-password").addEventListener("click", async (e) => {
   e.preventDefault();
   const email = document.getElementById("login-email").value;
-
-  if (!email) {
-    alert("Please enter your email first!");
-    return;
-  }
+  if (!email) { alert("Please enter your email first!"); return; }
 
   try {
     const res = await fetch("/forgot-password", {
@@ -138,25 +136,17 @@ document.getElementById("forgot-password").addEventListener("click", async (e) =
     });
     const data = await res.json();
     alert(data.msg);
-  } catch(err){
-    console.error(err);
-    alert("Error sending reset email!");
-  }
+  } catch(err){ console.error(err); alert("Error sending reset email!"); }
 });
 
 // -------------------------
-// RESET PASSWORD PAGE
+// RESET PASSWORD
 // -------------------------
-// RESET PASSWORD PAGE FUNCTION
 async function resetPassword() {
   const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get("token"); // get token from URL
+  const token = urlParams.get("token");
   const password = document.getElementById("password").value;
-
-  if (!password) {
-    alert("Please enter a new password!");
-    return;
-  }
+  if (!password) { alert("Please enter a new password!"); return; }
 
   try {
     const res = await fetch("/reset-password", {
@@ -171,11 +161,7 @@ async function resetPassword() {
     alert("Error resetting password!");
   }
 }
-
-// Attach listener if button exists (only on reset page)
 document.getElementById("resetBtn")?.addEventListener("click", resetPassword);
-
-
 
 // -------------------------
 // GOOGLE LOGIN
@@ -191,9 +177,10 @@ function handleCredentialResponse(response){
     if(data.msg){
       alert(data.msg);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user?.email || data.user?.name || "User");
       document.querySelectorAll("input").forEach(input => input.value = "");
-    }
-    else alert("Google login failed!");
+      window.location.href = "front.html";
+    } else alert("Google login failed!");
   })
   .catch(err => { console.error(err); alert("Google login failed!"); });
 }

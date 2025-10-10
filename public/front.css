@@ -263,3 +263,95 @@
   background-attachment: fixed;
   background: transparent;
 }
+.topbar {
+  display: flex;
+  justify-content: space-evenly; /* aligns items to right */
+  align-items: center;
+  gap: 20px;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.login-btn-container button {
+  background-color: #ff6600; /* Orange button */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.login-btn-container button:hover {
+  background-color: #e55a00;
+}
+
+/* Profile Circle */
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.profile-menu a:hover {
+  color: #ff6600;
+}
+#user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+#user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Animation: pop effect */
+#user-avatar.pop {
+  transform: scale(1);
+}
