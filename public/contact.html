@@ -7,6 +7,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+<!-- Sidebar -->
+<div class="sidebar">
+  <!-- Logo -->
+  <div class="logo">
+    <img src="logo2.png" alt="Logo">
+  </div>
+
+  <a href="#home"><i class="fas fa-home"></i><span>HOME</span></a>
+ 
+   <a href="explore.html" target="_blank"><i class="fas fa-university"></i><span>FEXPLORE</span></a>
+   <a href="contact.html" target="_blank"><i class="fas fa-phone"></i><span>CONTACT</span></a>
+ <a href="admin-login.html" target="_blank"><i class="fas fa-users"></i><span>FEEDBACK</span></a>
+
+  <a href="#sponsors"><i class="fas fa-gem"></i><span>MAP</span></a>
+</div>
+
+<!-- Load Font Awesome (keep in <head>) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+
+<!-- Load Lucide icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
 
   <style>
     * {
@@ -28,46 +55,84 @@
 
     /* Sidebar (glass effect) */
     .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 90px;
-      height: 100%;
-      
-      
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 25px 0;
-      gap: 35px;
-      
-    }
+  position: fixed;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
 
-    .sidebar .logo img {
-      width: 160px;
-      margin-top: 0px;
-      filter: brightness(0) invert(1); /* makes logo white if dark */
-    }
+  /* Glass + neon effect */
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
 
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      font-size: 0.7rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.3s ease;
-    }
+  padding: 25px 18px;
+  border-radius: 25px;
 
-    .sidebar a i {
-      font-size: 26px;
-    }
+  /* Auto height — wraps icons only */
+  height: auto;
+  width: 90px;
 
-    .sidebar a:hover {
-      color: #00f0ff;
-      transform: scale(1.1);
-    }
+  /* Floating feel */
+  transition: all 0.4s ease;
+}
+
+.sidebar:hover {
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.4);
+  transform: translateY(-50%) scale(1.02);
+}
+
+.sidebar .logo img {
+  width: 70px;
+  margin-bottom: 15px;
+  filter: brightness(0) invert(1);
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+
+.sidebar a i {
+  width: 32px;
+  height: 32px;
+  stroke: #00f0ff;
+  stroke-width: 2px;
+  border: 2px solid #00f0ff;
+  border-radius: 50%;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.sidebar a span {
+  margin-top: 5px;
+  opacity: 0.85;
+  letter-spacing: 0.6px;
+}
+
+.sidebar a:hover i {
+  background: rgba(0, 240, 255, 0.15);
+  transform: scale(1.2);
+  box-shadow: 0 0 15px #00f0ff;
+}
+
+.sidebar a:hover span {
+  color: #00f0ff;
+  text-shadow: 0 0 8px #00f0ff;
+  opacity: 1;
+}
+
 
     /* Main container */
     .team-container {
