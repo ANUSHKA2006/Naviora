@@ -1,6 +1,7 @@
 // server.js (CommonJS - merged)
 
 // Load env first
+
 require("dotenv").config();
 
 // Core & 3rd-party
@@ -29,6 +30,8 @@ const Agent = require("./models/Agent.js");
 
 // App setup
 const app = express();
+
+app.use(express.static('public'));
 
 // CORS: allow live-server plus general local dev. Adjust as needed.
 app.use(cors({ origin: ["http://127.0.0.1:5500", "http://localhost:3000", "http://localhost:5500"] }));
