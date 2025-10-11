@@ -1,0 +1,31 @@
+/* Glass effect card */
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; /* for headings/content */
+}
+
+/* Input text should appear black */
+.glass-card input,
+.glass-card textarea,
+.glass-card select {
+    color: black;
+    background-color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Placeholder text color */
+.glass-card input::placeholder {
+    color: rgba(0,0,0,0.5);
+}
+
+/* Spinner animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Modal Travel Planner</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="travel.css">
+</head>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
+
+    <!-- Video Background -->
+    <video autoplay muted loop id="bgVideo" class="fixed inset-0 w-full h-full object-cover z-0">
+        <source src="103819-664507357_small(1).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Overlay for better readability -->
+    <div class="fixed inset-0 bg-black opacity-40 z-5"></div>
+
+    <!-- Main content above video -->
+    <div class="max-w-6xl mx-auto relative z-10">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-blue-800">Journey Scout ✈🚂🚌</h1>
+            <p class="text-lg text-gray-100 mt-2">Find the best path by air, rail, or road.</p>
+        </header>
+
+        <!-- Search Form -->
+        <div class="glass-card p-6 md:p-8 shadow-xl rounded-xl mb-10 border-t-4 border-blue-600">
+            <h2 class="text-2xl font-semibold mb-6 text-white">Plan Your Trip</h2>
+            <form id="travelForm" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                    <label for="origin" class="block text-sm font-medium text-white mb-1">Origin</label>
+                    <input type="text" id="origin" placeholder="Departure City" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <div>
+                    <label for="destination" class="block text-sm font-medium text-white mb-1">Destination</label>
+                    <input type="text" id="destination" placeholder="Arrival City" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <div>
+                    <label for="date" class="block text-sm font-medium text-white mb-1">Departure Date</label>
+                    <input type="date" id="date" required class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150">
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" id="searchButton" class="w-full p-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition duration-200 shadow-md flex items-center justify-center space-x-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Search Options</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsContainer" class="space-y-8">
+            <div id="loadingIndicator" class="hidden text-center p-8 glass-card shadow-lg">
+                <div class="flex items-center justify-center space-x-3">
+                    <div class="spinner border-t-4 border-blue-500 border-solid h-8 w-8 rounded-full"></div>
+                    <p class="text-xl font-medium text-white">Fetching travel data...</p>
+                </div>
+            </div>
+
+            <div id="optimizedPathCard"></div>
+            <div id="comparisonCards" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- Message Box -->
+        <div id="messageBox" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50">
+            <div class="glass-card p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
+                <h3 id="messageTitle" class="text-xl font-bold text-red-600 mb-3">Error</h3>
+                <p id="messageContent" class="text-gray-100 mb-4"></p>
+                <button onclick="hideMessageBox()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="travel.js"></script>
+</body>
+</html>
